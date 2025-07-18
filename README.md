@@ -43,3 +43,6 @@ You can either use standolone image with `Dockerfile`, or full setup with postgr
 3. Use the provided migration commands or access Doctrine CLI: `docker compose run --rm -it slim composer db` (for fresh migration: `db:create`)
 The application should be now accessible @ `http://127.0.0.1:8080`.
 
+### Running locally
+Would still recommend docker, but you can run the app with `composer start`. The same steps and commands apply - `composer install` to install dependencies and `composer db` for Doctrine CLI access.
+
