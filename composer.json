@@ -1,0 +1,67 @@
+{
+    "name": "tpalinski/slim-microtemplate",
+    "description": "A small template for Slim microservices using Doctrine and some QOL stuff, based on the Slim Skeleton template",
+    "keywords": [
+        "microframework",
+        "rest",
+        "router",
+        "psr7",
+        "ORM"
+    ],
+    "homepage": "http://github.com/tpalinski/slim-microtemplate",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tymoteusz Paliński",
+            "email": "tpalinski@icloud.com",
+            "homepage": "github.com/tpalinski"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "ext-json": "*",
+        "doctrine/dbal": "^4.0",
+        "doctrine/migrations": "^3.9",
+        "doctrine/orm": "^3.0",
+        "jms/serializer": "^3.32",
+        "monolog/monolog": "^2.8",
+        "php-di/php-di": "^6.4",
+        "ramsey/uuid": "^4.7",
+        "slim/psr7": "^1.5",
+        "slim/slim": "^4.10",
+        "symfony/cache": "^7.3",
+        "vlucas/phpdotenv": "^5.6"
+    },
+    "require-dev": {
+        "jangregor/phpstan-prophecy": "^1.0.0",
+        "phpspec/prophecy-phpunit": "^2.0",
+        "phpstan/extension-installer": "^1.2.0",
+        "phpstan/phpstan": "^1.8",
+        "phpunit/phpunit": "^9.5.26",
+        "squizlabs/php_codesniffer": "^3.7"
+    },
+    "config": {
+        "allow-plugins": {
+            "phpstan/extension-installer": true
+        },
+        "process-timeout": 0,
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "start": "php -S localhost:8080 -t public",
+        "test": "phpunit",
+        "db": "php vendor/bin/doctrine-migrations",
+        "db:migrate": "php vendor/bin/doctrine-migrations orm:schema-tool:update",
+        "db:create": "php vendor/bin/doctrine-migrations orm:schema-tool:create"
+    }
+}

@@ -1,0 +1,30 @@
+version: '3.7'
+
+volumes:
+    logs:
+        driver: local
+
+services:
+    slim:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: php:8.3-alpine
+        working_dir: /var/www
+        command: php -S 0.0.0.0:8080 -t public
+        environment:
+            docker: "true"
+        ports:
+            - "8080:8080"
+        volumes:
+            - .:/var/www
+            - logs:/var/www/logs
+            - ../gatedtos:/var/gatedtos
+    postgres:
+        image: postgres:latest
+        ports:
+            - "5432:5432"
+        environment:
+            POSTGRES_PASSWORD: admin
+            POSTGRES_DB: gates
+            POSTGRES_USER: admin
