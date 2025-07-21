@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Application\Cache\ApcuCache;
+use App\Application\Cache\CacheInterface;
 use App\Application\Settings\Settings;
 use App\Application\Settings\SettingsInterface;
 use DI\ContainerBuilder;
@@ -53,6 +55,9 @@ return function (ContainerBuilder $containerBuilder) {
             ];
             $connection = DriverManager::getConnection($connectionConfig, $config);
             return new EntityManager($connection, $config);
+        },
+        CacheInterface::class => function (ContainerInterface $c) {
+            return new ApcuCache();
         }
     ]);
 };
