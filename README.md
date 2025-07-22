@@ -1,6 +1,6 @@
 # Slim Framework 4 Microtemplate
 
-This is a Slim microservice template based on the [Slim Skeleton](https://github.com/slimphp/Slim-Skeleton) template. Support for Doctrine 4 was added, along with some utility DTO parsing and .env file support with sensible default handling.
+This is a Slim microservice template based on the [Slim Skeleton](https://github.com/slimphp/Slim-Skeleton) template. Support for Doctrine 4 was added, along with some utility DTO parsing and .env file support with sensible default handling. There is also a lightweight APCU based cache implementation.
 
 ## Overview
 ### `app`
@@ -16,7 +16,7 @@ Good ole' php public directory, with .env file being parsed in index.php
 This is the main business logic directory that you will work the most in
 
 #### `Application`
-Here is your http communication layer, with custom middleware and route handlers living here. Additionally, app settings are defined here.
+Here is your http communication layer, with custom middleware and route handlers living here. Additionally, app settings are defined here. Some basic APCU based cache implementation can be also found here.
 
 #### `Domain`
 All abstract things such as interfaces and abstract classes should live here. For Doctrine entities, `Entity` directory should be where you put them, since this is the default directory where metadata is searched for.
@@ -25,7 +25,7 @@ All abstract things such as interfaces and abstract classes should live here. Fo
 Directory for all services and repositories. I would recommend using Doctrine repositories and wiring them up with entity classes instead of writing your own from scratch, since they work very well in this setting.
 
 ### `tests`
-Did not do anything with those. Just write good code or test in prod.
+Write your tests here. We use PHPunit for unit testing. You can find an example test suite for the APCU cache implementation here.
 
 ### `var`
 This is where slim and doctrine cache things.
