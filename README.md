@@ -46,3 +46,5 @@ The application should be now accessible @ `http://127.0.0.1:8080`.
 ### Running locally
 Would still recommend docker, but you can run the app with `composer start`. The same steps and commands apply - `composer install` to install dependencies and `composer db` for Doctrine CLI access.
 
+## Development
+To install a pre-commit phpstan check for your code quality, please run `composer hook:install`. We provided `.editorconfig` as well as phpstan config file for you to modify as you please.

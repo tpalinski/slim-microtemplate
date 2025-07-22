@@ -62,6 +62,7 @@
         "test": "phpunit",
         "db": "php vendor/bin/doctrine-migrations",
         "db:migrate": "php vendor/bin/doctrine-migrations orm:schema-tool:update",
-        "db:create": "php vendor/bin/doctrine-migrations orm:schema-tool:create"
+        "db:create": "php vendor/bin/doctrine-migrations orm:schema-tool:create",
+        "hook:install": "cp ./pre-commit-hook.sh .git/hooks/pre-commit"
     }
 }
