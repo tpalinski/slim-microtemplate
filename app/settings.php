@@ -8,14 +8,15 @@ use DI\ContainerBuilder;
 use Monolog\Logger;
 
 
-function getEnvWithDefaults(string $key, mixed $default = null): mixed {
+if(!function_exists('getEnvWithDefaults')) {
+  function getEnvWithDefaults(string $key, mixed $default = null): mixed {
     $filters = [
         'boolean' => FILTER_VALIDATE_BOOLEAN,
         'integer' => FILTER_VALIDATE_INT,
         'double'  => FILTER_VALIDATE_FLOAT,
         'float' => FILTER_VALIDATE_FLOAT,
-        'string'  => null,      
-        'NULL'    => null,     
+        'string'  => null,
+        'NULL'    => null,
     ];
     $fallbackType = gettype($default);
     if(!isset($_ENV[$key])) {
@@ -34,38 +35,42 @@ function getEnvWithDefaults(string $key, mixed $default = null): mixed {
     $parsedEnv = filter_var($envString, $filters[$fallbackType], FILTER_NULL_ON_FAILURE);
     $res = $parsedEnv === null ? $default : $parsedEnv;
     return $res;
+  }
 }
 
-function setupLogger(): mixed {
+if(!function_exists('setupLogger')) {
+  function setupLogger(): mixed {
     /** @var array<int> $levelMap */
     $levelMap = [
-        'debug' => Logger::DEBUG,
-        'info' => Logger::INFO,
-        'critical' => Logger::CRITICAL,
+      'debug' => Logger::DEBUG,
+      'info' => Logger::INFO,
+      'critical' => Logger::CRITICAL,
     ];
     $loggerLevel = $levelMap[getEnvWithDefaults(Settings::LOGGER_LEVEL, 'info')] ?? Logger::INFO;
     return [
-        Settings::LOGGER_LEVEL => $loggerLevel,
-        Settings::LOGGER_PATH => isset($_ENV[Settings::DOCKER]) ? 'php://stdout' : __DIR__.'/../'.getEnvWithDefaults(Settings::LOGGER_PATH, 'logs/app.log'),
-        Settings::LOGGER_NAME => getEnvWithDefaults(Settings::LOGGER_NAME, 'gatekeeper'),
+      Settings::LOGGER_LEVEL => $loggerLevel,
+      Settings::LOGGER_PATH => isset($_ENV[Settings::DOCKER]) ? 'php://stdout' : __DIR__.'/../'.getEnvWithDefaults(Settings::LOGGER_PATH, 'logs/app.log'),
+      Settings::LOGGER_NAME => getEnvWithDefaults(Settings::LOGGER_NAME, 'gatekeeper'),
     ];
+  }
 }
 
-function setupDoctrine(): mixed {
-
+if(!function_exists('setupDoctrine')) {
+  function setupDoctrine(): mixed {
     return [
-        Settings::DOCTRINE_DEV_MODE => getEnvWithDefaults(Settings::DOCTRINE_DEV_MODE, false),
-        Settings::DOCTRINE_CACHE_DIR => __DIR__.'/../'.getEnvWithDefaults(Settings::DOCTRINE_CACHE_DIR, 'var/cache/doctrine'),
-        Settings::DOCTRINE_METADATA_DIRS => [__DIR__.'/../src/Domain/Entity'],
-        Settings::DOCTRINE_CONNECTION => [
-            Settings::DOCTRINE_DRIVER => 'pdo_pgsql',
-            Settings::DOCTRINE_HOST => getEnvWithDefaults(Settings::DOCTRINE_HOST, 'postgres'),
-            Settings::DOCTRINE_PORT => getEnvWithDefaults(Settings::DOCTRINE_PORT, 5432),
-            Settings::DOCTRINE_USER => getEnvWithDefaults(Settings::DOCTRINE_USER, 'admin'),
-            Settings::DOCTRINE_PASSWORD => getEnvWithDefaults(Settings::DOCTRINE_PASSWORD),
-            Settings::DOCTRINE_DB => getEnvWithDefaults(Settings::DOCTRINE_DB, 'gates'),
-        ]
+      Settings::DOCTRINE_DEV_MODE => getEnvWithDefaults(Settings::DOCTRINE_DEV_MODE, false),
+      Settings::DOCTRINE_CACHE_DIR => __DIR__.'/../'.getEnvWithDefaults(Settings::DOCTRINE_CACHE_DIR, 'var/cache/doctrine'),
+      Settings::DOCTRINE_METADATA_DIRS => [__DIR__.'/../src/Domain/Entity'],
+      Settings::DOCTRINE_CONNECTION => [
+        Settings::DOCTRINE_DRIVER => 'pdo_pgsql',
+        Settings::DOCTRINE_HOST => getEnvWithDefaults(Settings::DOCTRINE_HOST, 'postgres'),
+        Settings::DOCTRINE_PORT => getEnvWithDefaults(Settings::DOCTRINE_PORT, 5432),
+        Settings::DOCTRINE_USER => getEnvWithDefaults(Settings::DOCTRINE_USER, 'admin'),
+        Settings::DOCTRINE_PASSWORD => getEnvWithDefaults(Settings::DOCTRINE_PASSWORD),
+        Settings::DOCTRINE_DB => getEnvWithDefaults(Settings::DOCTRINE_DB, 'gates'),
+      ]
     ];
+  }
 }
 
 return function (ContainerBuilder $containerBuilder) {

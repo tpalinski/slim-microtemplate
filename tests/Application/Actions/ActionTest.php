@@ -7,6 +7,7 @@ namespace Tests\Application\Actions;
 use App\Application\Actions\Action;
 use App\Application\Actions\ActionPayload;
 use DateTimeImmutable;
+use JMS\Serializer\SerializerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Log\LoggerInterface;
 use Tests\TestCase;
@@ -18,12 +19,14 @@ class ActionTest extends TestCase
         $app = $this->getAppInstance();
         $container = $app->getContainer();
         $logger = $container->get(LoggerInterface::class);
+        $serializer = $container->get(SerializerInterface::class);
 
-        $testAction = new class ($logger) extends Action {
+        $testAction = new class ($logger, $serializer) extends Action {
             public function __construct(
-                LoggerInterface $loggerInterface
+              LoggerInterface $loggerInterface,
+              SerializerInterface $serializer
             ) {
-                parent::__construct($loggerInterface);
+                parent::__construct($loggerInterface, $serializer);
             }
 
             public function action(): Response
@@ -51,12 +54,14 @@ class ActionTest extends TestCase
         $app = $this->getAppInstance();
         $container = $app->getContainer();
         $logger = $container->get(LoggerInterface::class);
+        $serializer = $container->get(SerializerInterface::class);
 
-        $testAction = new class ($logger) extends Action {
+        $testAction = new class ($logger, $serializer) extends Action {
             public function __construct(
-                LoggerInterface $loggerInterface
+              LoggerInterface $loggerInterface,
+              SerializerInterface $serializerInterface,
             ) {
-                parent::__construct($loggerInterface);
+                parent::__construct($loggerInterface, $serializerInterface);
             }
 
             public function action(): Response
