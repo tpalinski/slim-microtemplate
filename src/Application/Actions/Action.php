@@ -25,6 +25,9 @@ abstract class Action
 
     protected Response $response;
 
+    /**
+     * @var array<string, mixed>
+     */
     protected array $args;
 
     public function __construct(LoggerInterface $logger, SerializerInterface $serializer)
@@ -34,6 +37,7 @@ abstract class Action
     }
 
     /**
+     * @param array<string, mixed> $args
      * @throws HttpNotFoundException
      * @throws HttpBadRequestException
      * @throws HttpConflictException
@@ -61,14 +65,17 @@ abstract class Action
     abstract protected function action(): Response;
 
     /**
-     * @return array|object
+     * @return array<string, mixed>|object
      */
-    protected function getFormData()
+    protected function getFormData(): array|object
     {
         return $this->request->getParsedBody();
     }
 
 
+    /**
+     * @return array<string, mixed>|object
+     */
     protected function getParsedBody(): array|object {
         $dto = $this->request->getAttribute(DtoExtractor::PARSED_BODY_REQUEST_KEY);
         if(is_null($dto)) {
@@ -91,7 +98,7 @@ abstract class Action
     }
 
     /**
-     * @param array|object|null $data
+     * @param array<string|int, mixed>|object|null $data
      */
     protected function respondWithData($data = null, int $statusCode = 200): Response
     {
@@ -103,6 +110,7 @@ abstract class Action
     protected function respond(ActionPayload $payload): Response
     {
         $json = json_encode($payload, JSON_PRETTY_PRINT);
+        assert($json!==false);
         $this->response->getBody()->write($json);
 
         return $this->response

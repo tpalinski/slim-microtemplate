@@ -51,6 +51,6 @@ interface CacheInterface
      * Clears the entire cache store
      * @throws CacheException
      */
-    public function clear();
+    public function clear(): void;
 
 }

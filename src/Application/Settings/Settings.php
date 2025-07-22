@@ -29,13 +29,20 @@ class Settings implements SettingsInterface
     public const DOCTRINE_PASSWORD = 'DOCTRINE_PASSWORD';
     public const DOCTRINE_DB = 'DOCTRINE_DB';
 
+
+    /**
+     * @var array<string, mixed> $settings
+     */
     private array $settings;
 
+
+    /**
+     * @param array<string, mixed> $settings
+     */
     public function __construct(array $settings)
     {
         $this->settings = $settings;
     }
-
     /**
      * @return mixed
      */

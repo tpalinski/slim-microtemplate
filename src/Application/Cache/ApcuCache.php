@@ -8,8 +8,7 @@ use App\Application\Cache\CacheException;
 
 class ApcuCache implements CacheInterface {
 
-  public function get(string $key): mixed
-  {
+  public function get(string $key): mixed {
     if(!apcu_exists($key)) {
       throw new CacheEntryNotFoundException("No entry under provided key");
     }
@@ -21,21 +20,18 @@ class ApcuCache implements CacheInterface {
     return $res;
   }
 
-  public function set(string $key, mixed $value, int $ttl = 60)
-  {
+  public function set(string $key, mixed $value, int $ttl = 60) {
     $successful = apcu_store($key, $value, $ttl);
     if(!$successful) {
       throw new CacheException("Could not set the value");
     }
   }
 
-  public function exists(string $key): bool
-  {
+  public function exists(string $key): bool {
     return apcu_exists($key);
   }
 
-  public function del(string $key)
-  {
+  public function del(string $key) {
     if(!apcu_exists($key)) {
       throw new CacheEntryNotFoundException("No entry under provided key to be deleted");
     }
@@ -45,8 +41,7 @@ class ApcuCache implements CacheInterface {
     }
   }
 
-  public function pop(string $key): mixed
-  {
+  public function pop(string $key): mixed {
     if(!apcu_exists($key)) {
       throw new CacheEntryNotFoundException("No entry under provided key to be deleted");
     }
@@ -62,8 +57,7 @@ class ApcuCache implements CacheInterface {
     return $res;
   }
 
-  public function clear()
-  {
+  public function clear(): void {
     apcu_clear_cache();
   }
 }
