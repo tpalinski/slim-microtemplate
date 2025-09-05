@@ -19,7 +19,6 @@ services:
         volumes:
             - .:/var/www
             - logs:/var/www/logs
-            - ../gatedtos:/var/gatedtos
     postgres:
         image: postgres:latest
         ports:

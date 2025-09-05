@@ -6,7 +6,8 @@ require __DIR__ . '/../vendor/autoload.php';
 
 $containerBuilder = new ContainerBuilder();
 
-if (false) { // Should be set to true in production
+// By now, env is loaded. See index.php
+if (isset($_ENV['ENVIRONMENT']) && $_ENV['ENVIRONMENT'] === 'production') {
 	$containerBuilder->enableCompilation(__DIR__ . '/../var/cache');
 }
 
