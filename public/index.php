@@ -7,16 +7,14 @@ use App\Application\Handlers\ShutdownHandler;
 use App\Application\ResponseEmitter\ResponseEmitter;
 use App\Application\Settings\Settings;
 use App\Application\Settings\SettingsInterface;
-use Dotenv\Dotenv;
 use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 
 require __DIR__ . '/../vendor/autoload.php';
 
 // Load environment
-// Since there are some performance overheads rumored to be an issue in PhpDotenv >5, this would benefit from being cached
-$dotenv = Dotenv::createImmutable(__DIR__.'/..');
-$dotenv->load();
+$loadEnv = require __DIR__.'/../app/environment.php';
+$loadEnv();
 
 $container = require __DIR__.'/../app/container.php';
 
